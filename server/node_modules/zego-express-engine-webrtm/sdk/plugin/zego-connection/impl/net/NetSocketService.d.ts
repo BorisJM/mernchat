@@ -1,0 +1,15 @@
+export declare class NetSocketService {
+    private proxyCtrl?;
+    private _socket;
+    ENV: number;
+    constructor(ENV: number, proxyCtrl?: any);
+    createSocket(server: string): void;
+    openHandler(hander: (e: any) => void): void;
+    responseHandler(): void;
+    onMessage(msg: any): void;
+    closeHandler(handler: (e: any) => void): void;
+    errorHandler(handler: (e: any) => void): void;
+    closeSocket(): void;
+    isDisConnect(): boolean;
+    sendMessage(msg: ArrayBuffer): void;
+}

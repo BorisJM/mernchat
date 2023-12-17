@@ -1,0 +1,15 @@
+import { ZegoLogger } from '../../util/logger';
+import { PcConnectState, BusinessService, DisconnectedType, PCOption } from '../../entity/AccessHubDefine';
+import { NetAgentPCRequest } from './NetAgentPCRequest';
+import { StreamManager } from '../stream/StreamManager';
+export declare class NetAgentPCRequestMgr {
+    private _streamManager;
+    private _logger;
+    pcStreamRequests: NetAgentPCRequest[];
+    pcEstablishTimeout: number;
+    constructor(_streamManager: StreamManager, _logger: ZegoLogger);
+    getRequest(service: BusinessService, option?: PCOption): NetAgentPCRequest;
+    updateConnectState(state: PcConnectState, type?: DisconnectedType, error?: any): void;
+    closePCs(): void;
+    setEstablishTimeout(timeout: number): void;
+}

@@ -1,0 +1,22 @@
+{
+    "name": "zego-express-engine-webrtm",
+    "version": "2.1.0",
+    "description": "zego webrtm express sdk",
+    "main": "./ZegoExpressWebRTM.js",
+    "typings": "./sdk/code/zh/zego.client.web.d.ts",
+    "keywords": [
+        "sdk",
+        "zego",
+        "webrtm",
+        "express"
+    ],
+    "author": "choui",
+    "license": "ISC",
+    "dependencies": {
+        "zego-express-logger": "1.4.2",
+        "protobufjs": "6.11.2",
+        "localforage": "1.10.0",
+        "long": "5.2.0",
+        "pako": "^2.1.0"
+    }
+}

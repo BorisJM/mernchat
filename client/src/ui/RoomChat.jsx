@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import useSound from "use-sound";
 import calling from "../sounds/call.mp3";
+import CallingUser from "./CallingUser";
+import Timer from "./Timer";
 
-function RoomChat({ children, isPlaying, handleLeave }) {
+function RoomChat({ children, isPlaying, handleLeave, handleMute }) {
+  const [isMuted, setIsMuted] = useState(false);
+  const [showCam, setShowCam] = useState(false);
   const [playSound, { stop }] = useSound(calling, {
     volume: 0.1,
   });
@@ -18,19 +22,50 @@ function RoomChat({ children, isPlaying, handleLeave }) {
   return (
     <div className="absolute bg-black w-full h-full left-0 top-0 z-50 bg-opacity-95 py-4 flex flex-col items-center justify-between">
       <div></div>
-      <div>{children}</div>
+      <div>
+        <CallingUser>
+          {!isPlaying ? (
+            <Timer play={!isPlaying ? true : false} />
+          ) : (
+            <span className="text-gray-400 text-lg">Calling...</span>
+          )}
+        </CallingUser>
+      </div>
       <ul className="flex gap-8">
         <li className="rounded-full p-3 flex bg-neutral-700">
-          <button>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="white"
-              className="w-6 h-6"
-            >
-              <path d="M8.25 4.5a3.75 3.75 0 117.5 0v8.25a3.75 3.75 0 11-7.5 0V4.5z" />
-              <path d="M6 10.5a.75.75 0 01.75.75v1.5a5.25 5.25 0 1010.5 0v-1.5a.75.75 0 011.5 0v1.5a6.751 6.751 0 01-6 6.709v2.291h3a.75.75 0 010 1.5h-7.5a.75.75 0 010-1.5h3v-2.291a6.751 6.751 0 01-6-6.709v-1.5A.75.75 0 016 10.5z" />
-            </svg>
+          <button
+            onClick={() => {
+              handleMute();
+              setIsMuted((bol) => !bol);
+            }}
+          >
+            {isMuted ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="white"
+                dataSlot="icon"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17.25 9.75 19.5 12m0 0 2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6 4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"
+                />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="white"
+                className="w-6 h-6"
+              >
+                <path d="M8.25 4.5a3.75 3.75 0 117.5 0v8.25a3.75 3.75 0 11-7.5 0V4.5z" />
+                <path d="M6 10.5a.75.75 0 01.75.75v1.5a5.25 5.25 0 1010.5 0v-1.5a.75.75 0 011.5 0v1.5a6.751 6.751 0 01-6 6.709v2.291h3a.75.75 0 010 1.5h-7.5a.75.75 0 010-1.5h3v-2.291a6.751 6.751 0 01-6-6.709v-1.5A.75.75 0 016 10.5z" />
+              </svg>
+            )}
           </button>
         </li>
         <li className="rounded-full p-3 flex bg-red-600">

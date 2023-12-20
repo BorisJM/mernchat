@@ -1,26 +1,24 @@
 import ProfilePicture from "./ProfilePicture";
 import { colorsArray } from "../utils/ColorsArray";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-function CallingUser({ username, picture }) {
+function CallingUser({ children, playTimer }) {
   const [color, setColor] = useState("");
+  const { selectedUser } = useSelector((state) => state.users);
+
+
   useEffect(() => {
-    const int = parseInt(username.slice(0, 9).length, 10);
+    const int = parseInt(selectedUser.username.slice(0, 9).length, 10);
     const color = colorsArray[int];
     setColor(color);
-  }, [username]);
+  }, [selectedUser]);
 
   return (
-    <div className="flex flex-col gap-2 items-center">
-      <ProfilePicture
-        selected={true}
-        picture={picture}
-        username={username}
-        color={color}
-        size="w-36 h-36"
-      />
-      <span className="text-white text-3xl">{username}</span>
-      <span className="text-gray-400 text-lg">Calling...</span>
+    <div className="flex flex-col gap-2 items-center relative">
+      <ProfilePicture selected={true} color={color} size="w-36 h-36" />
+      <span className="text-white text-3xl">{selectedUser.username}</span>
+      <div>{children}</div>
     </div>
   );
 }
